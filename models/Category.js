@@ -25,5 +25,5 @@ Category.init(
     modelName: 'category',
   }
 );
-
+Category.hasMany(Product);
 module.exports = Category;
