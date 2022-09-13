@@ -52,5 +52,5 @@ Product.init(
   }
 );
 Product.belongsTo(Category);
-Product.belongsToMany(Tag,
+Product.belongsToMany(Tag, //Need some help
 module.exports = Product;

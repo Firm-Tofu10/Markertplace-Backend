@@ -24,5 +24,5 @@ Tag.init(
     modelName: 'tag',
   }
 );
-Tag.belongsToMany(Product,
+Tag.belongsToMany(Product, //Need some help
 module.exports = Tag;
