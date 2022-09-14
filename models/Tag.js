@@ -4,6 +4,7 @@ const sequelize = require('../config/connection.js');
 
 class Tag extends Model {}
 
+import ProductTag from ('./ProductTag')
 Tag.init(
   {
 		id: {
@@ -24,5 +25,5 @@ Tag.init(
     modelName: 'tag',
   }
 );
-Tag.belongsToMany(Product, //Need some help
+Tag.belongsToMany(Product, { through: ProductTag })//Need some help
 module.exports = Tag;
