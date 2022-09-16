@@ -42,7 +42,14 @@ Product.init(
 				model: Category,
 				key: 'id',
 			}
-		}
+		},
+		tag_ids:{
+			type: DataTypes.ARRAY,
+			references: {
+				model: Tag,
+				key: 'id',
+			}
+		},
   },
   {
     sequelize,
@@ -52,6 +59,4 @@ Product.init(
     modelName: 'product',
   }
 );
-Product.belongsTo(Category);
-Product.belongsToMany(Tag, { through: ProductTag })//Need some help
 module.exports = Product;
