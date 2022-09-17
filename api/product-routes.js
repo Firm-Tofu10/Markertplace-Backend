@@ -1,8 +1,10 @@
 const router = require('express').Router();
-const { Product, Category, Tag, ProductTag } = require('../../models');
+const { Product, Category, Tag, ProductTag } = require('../models');
 
 // The `/api/products` endpoint
-
+router.use('/api/product-routes.js', Product, (req, res) => { //need help to fix this function
+	res.send("<h1>Display Product</h1>");
+});
 // get all products
 router.get('/', (req, res) => {
 	console.log(req, res)
