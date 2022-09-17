@@ -80,7 +80,7 @@ router.post('/', (req, res) => {
 
 // update product
 router.put('/:id', (req, res) => { 
-		console.log(req, res) //Could be wrong
+		console.log(req) 
 	// update product data
 	Product.update(req.body, {
 		where: {
@@ -123,6 +123,21 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
 	// delete one product by its `id` value
+	console.log(req.params)
+	if(!req.params.id) res.status(400).json({ message: `cant not find product with ID ${req.params.id}`})
+	Product.delete({
+		where: {
+			id: req.params.id
+		},
+		include: [
+			Product, {
+				model: Product,
+				through: Product
+			}
+		]
+	})
+
+
 });
 
 module.exports = router;

@@ -4,6 +4,9 @@ const sequelize = require('../config/connection');
 
 class ProductTag extends Model {}
 
+const Tag = require('./Tag')
+
+const Product = require('./Product')
 
 ProductTag.init(
   {

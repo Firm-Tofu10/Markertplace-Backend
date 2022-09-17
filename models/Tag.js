@@ -4,7 +4,8 @@ const sequelize = require('../config/connection.js');
 
 class Tag extends Model {}
 
-import ProductTag from ('./ProductTag')
+const ProductTag = require('./ProductTag')
+
 Tag.init(
   {
 		id: {
