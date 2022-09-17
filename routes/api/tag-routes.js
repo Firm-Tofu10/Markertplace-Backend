@@ -39,44 +39,44 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  Tag.create(req.body)
-		.then((tag) => {
-			if (req.body.tagIds.length) {
-			const tagCreate = req.body.tagIds.map((tag_id) => {
-				console.log(tag_id)
-				return {
-					product_id: Tag.id,
-					tag_id,
-				};
-			});
+  // Tag.create(req.body)
+	// 	.then((tag) => {
+	// 		if (req.body.tagIds.length) {
+	// 		const tagCreate = req.body.tagIds.map((tag_id) => {
+	// 			console.log(tag_id)
+	// 			return {
+	// 				product_id: Tag.id,
+	// 				tag_id,
+	// 			};
+	// 		});
 	// create a new tag
 });
 
 router.put('/:id', (req, res) => {
   console.log(req) 
-	// update a tag's name by its `id` value
-	Tag.update(req.body, {
-		where: {
-			Tag: req.params.id,S
-		},
-	})
+	// // update a tag's name by its `id` value
+	// Tag.update(req.body, {
+	// 	where: {
+	// 		Tag: req.params.id,S
+	// 	},
+	// })
 });
 
 router.delete('/:id', (req, res) => {
   console.log(req.params)
-	// delete on tag by its `id` value
-	if(!req.params.id) res.status(400).json({ message: `cant not delete Tag with ID ${req.params.id}`})
-	Tag.delete({
-		where: {
-			Tag: req.params.id
-		},
-		include: [
-			Tag, {
-				model: Tag,
-				through: ProductTag
-			}
-		]
-	})
+	// // delete on tag by its `id` value
+	// if(!req.params.id) res.status(400).json({ message: `cant not delete Tag with ID ${req.params.id}`})
+	// Tag.delete({
+	// 	where: {
+	// 		Tag: req.params.id
+	// 	},
+	// 	include: [
+	// 		Tag, {
+	// 			model: Tag,
+	// 			through: ProductTag
+	// 		}
+	// 	]
+	// })
 });
 
 module.exports = router;
