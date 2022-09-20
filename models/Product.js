@@ -45,13 +45,13 @@ Product.init(
 				key: 'id',
 			}
 		},
-		tag_ids:{
-			type: DataTypes.ARRAY(DataTypes.INTEGER),
-			references: {
-				model: Tag,
-				key: 'id',
-			}
-		},
+		// tag_ids:{
+		// 	type: DataTypes.ARRAY(DataTypes.INTEGER),
+		// 	references: {
+		// 		model: Tag,
+		// 		key: 'id',
+		// 	}
+		// },
   },
   {
     sequelize,
