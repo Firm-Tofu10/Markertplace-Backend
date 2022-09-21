@@ -4,7 +4,7 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 const Category = require('./Category');
 // import ProductTag from ('./ProductTag')
-const ProductTag = require('./ProductTag');
+// const ProductTag = require('./ProductTag');
 const Tag = require('./Tag')
 
 // Initialize Product model (table) by extending off Sequelize's Model class
@@ -40,10 +40,10 @@ Product.init(
 		},
 		category_id:{
 			type: DataTypes.INTEGER,
-			references: {
-				model: Category,
-				key: 'id',
-			}
+			// references: {
+			// 	model: Category,
+			// 	key: 'id',
+			// }
 		},
 		// tag_ids:{
 		// 	type: DataTypes.ARRAY(DataTypes.INTEGER),

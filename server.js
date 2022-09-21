@@ -25,10 +25,10 @@ app.use(routes);
 // await Tag.sync({ force: false });
 // console.log("The table for the Tag model was just (re)created!");
 
-// sync sequelize models to the database, then turn on the server (Still need)
+// sync sequelize models to the database, then turn on the server
 sequelize.sync({force: false}).then(()=>{
 	app.listen(PORT, () => {
 		console.log(`App listening on port ${PORT}!`);
 	});
-}) //memorise
-
+})
+//memorise
