@@ -8,7 +8,7 @@ router.use('/api/product-routes', productRoute, (req, res) => {
 });
 
 router.use('/api', apiRoutes, (req, res) => { 
-	res.send("<h1>Correct Route!</h1>");
+	res.send("<h1>API Called</h1>");
 });
 
 router.use((req, res) => {
