@@ -8,46 +8,55 @@ router.get('/', (req, res) => {
 	console.log("hiting endpoint findAll",Product)
 	Product.findAll({
 		include: [
-			Category, {
+			{
+				model: Category,
+				attributes: ["category_name"],
+			},
+			{
 				model: Tag,
-				through: ProductTag
+				attributes: ["tag_name"]
 			}
 		]
-		
 	})
-		// .then(products => res.json(products))
-		// .catch(err => res.status(500).json(err))
-
-		.then(products => res.json(products))
-		.catch(err => {
-			console.log("err");
-			res.status(500).json(err)
-		});
-	// find all products
-	// be sure to include its associated Category and Tag data
+	.then(products => res.json(products))
+	.catch(err => {
+		console.log(err);
+		res.status(500).json(err);
+	});
 });
 
 // get one product
 router.get('/:id', (req, res) => {
 	console.log(req.params)
-	if(!req.params.id) res.status(400).json({ message: `cant not find product with ID ${req.params.id}`})
 	Product.findOne({
 		where: {
 			id: req.params.id
 		},
 		include: [
-			Category, {
+			{
+				model: Category,
+				attributes: ["category_name"]
+			},
+			{
 				model: Tag,
-				through: ProductTag
+				attributes: ["tag_name"]
 			}
 		]
 	})
-		.then(product => res.json(product))
-		.catch(err => res.status(500).json(err))
+		.then(Product => {
+			if (!Product) {
+			res.status(500).json({message: "Get One err if"});
+			return;
+			}
+			res.json(Product);
+		})
+		.catch(err => {
+			console.log("err in catch");
+			res.status(500).json(err);
 	// find a single product by its `id`
 	// be sure to include its associated Category and Tag data
 });
-
+});
 // create new product
 router.post('/', (req, res) => {
 	console.log("Hiting Post", req.body)
@@ -59,12 +68,14 @@ router.post('/', (req, res) => {
 			tagIds: [1, 2, 3, 4]
 		}
 	*/
-	if (req.body=={}){
-		res.status(400).json({message: "Missing req propertys of req body."})
-		return
-	}
-	Product.create(req.body)
-		.then((product) => {
+	Product.create({
+		product_name: req.body.product_name,
+		price: req.body.price,
+		stock: req.body.stock,
+		category_id: req.body.category_id,
+		tagIds: req.body.tagIds
+	})
+	.then((product) => {
 			// if there's product tags, we need to create pairings to bulk create in the ProductTag model
 			if (req.body.tagIds.length) {
 				const productTagIdArr = req.body.tagIds.map((tag_id) => {
@@ -77,7 +88,7 @@ router.post('/', (req, res) => {
 				return ProductTag.bulkCreate(productTagIdArr); //Was erring
 			}
 			// if no product tags, just respond
-			// res.status(200).json(product);
+			res.status(200).json(product);
 		})
 		.then((productTagIds) => res.status(200).json(productTagIds))
 		// .then((productTagIds) => res.status(200))
