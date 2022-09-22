@@ -6,14 +6,19 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 router.get('/', (req, res) => {
   // find all categories
 	console.log("hiting endpoint findAll",Category)
-	Product.findAll({
-		// include: [
-		// 	Product, {
-		// 		model: Product,
-		// 		through: ProductTag
-		// 	}
-		// ]
-	})
+	Category.findAll({
+		include: [
+			 {
+				model: Product,
+				attributes: ['id','product_name','price','category_id']
+			}
+		]
+	}) 
+	.then(category => res.json(category))
+		.catch(err => {
+			console.log("err");
+			res.status(500).json(err)
+		});
   // be sure to include its associated Products
 	
 });
