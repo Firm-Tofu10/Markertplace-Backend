@@ -1,5 +1,5 @@
 const { Product } = require('../models');
-
+console.log("Hit breakpoint ProductSEED")
 const productData = [
   {
     product_name: 'Plain T-Shirt',

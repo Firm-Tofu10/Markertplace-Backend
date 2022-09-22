@@ -1,5 +1,5 @@
 const { Category } = require('../models');
-
+console.log("Hitbreak point CategorySEED")
 const categoryData = [
   {
     category_name: 'Shirts',

@@ -1,10 +1,11 @@
 const router = require('express').Router();
+const { NULL } = require('mysql2/lib/constants/types');
 const { Product, Category, Tag, ProductTag } = require('../models');
 
 // The `/api/products` endpoint
 // get all products
 router.get('/', (req, res) => {
-	console.log(req, res)
+	console.log("hiting endpoint findAll",Product)
 	Product.findAll({
 		include: [
 			Category, {
@@ -43,7 +44,8 @@ router.get('/:id', (req, res) => {
 
 // create new product
 router.post('/', (req, res) => {
-	/* req.body should look like this...
+	console.log("Hiting Post", req.body)
+	/* req.body should look like this... 
 		{
 			product_name: "Basketball",
 			price: 200.00,
@@ -51,8 +53,9 @@ router.post('/', (req, res) => {
 			tagIds: [1, 2, 3, 4]
 		}
 	*/
-	if (!req.body.product_name || !req.body.price || !req.body.stock || !Array.isArray(req.body.tag_ids)) {
-	res.status(400).json({message: "Missing req propertys of req body."})
+	if (req.body=={}){
+		res.status(400).json({message: "Missing req propertys of req body."})
+		return
 	}
 	Product.create(req.body)
 		.then((product) => {
@@ -65,12 +68,13 @@ router.post('/', (req, res) => {
 						tag_id,
 					};
 				});
-				return ProductTag.bulkCreate(productTagIdArr);
+				return ProductTag.bulkCreate(productTagIdArr); //Was erring
 			}
 			// if no product tags, just respond
-			res.status(200).json(product);
+			// res.status(200).json(product);
 		})
 		.then((productTagIds) => res.status(200).json(productTagIds))
+		// .then((productTagIds) => res.status(200))
 		.catch((err) => {
 			console.log(err);
 			res.status(400).json(err);

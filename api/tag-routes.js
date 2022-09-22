@@ -8,6 +8,7 @@ router.get('/', (req, res) => {
 	// if(!req.params.id) 
 	// res.status(400).json({ message: `cant not find product with Tag ${req.params}`})
 	// find all tags
+	console.log("hiting endpoint findAll",Tag)
 	Tag.findAll({
 		include: [
 			{
