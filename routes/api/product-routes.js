@@ -98,7 +98,7 @@ router.post('/', (req, res) => {
 		});
 });
 
-// update product
+// update product LEFT OF HERE!!!!
 router.put('/:id', (req, res) => { 
 		console.log(req) 
 	// update product data
