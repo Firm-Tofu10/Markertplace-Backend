@@ -25,6 +25,7 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   // find one category by its `id` value
+	console.log("hiting endpoint findOne",Category)
 	Category.findOne({
 		include: [
 			 {
@@ -43,6 +44,7 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   // create a new category
+	console.log("hiting endpoint Post",Category)
 	Category.create(req.body)
 		.then((Category) => {
 			console.log("endpoint category post")
@@ -51,6 +53,7 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
+	console.log("before then category PUT")
 	console.log(req) 
 	 // update a category by its `id` value
 	Category.update(req.body, {
@@ -58,7 +61,6 @@ router.put('/:id', (req, res) => {
 			id: req.params.id
 		}
 	})
-	console.log("before then category PUT")
 	.then(category => {
 		if (!category) {
 			res.status(500).json({message:"Put category in if"});
@@ -73,6 +75,7 @@ router.put('/:id', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
+	console.log("hiting endpoint delete",Category)
   console.log(req.params)
 	// delete a category by its `id` value
 	// if(!req.params.id) res.status(400).json({ message: `cant not find product with ID ${req.params.id}`})
