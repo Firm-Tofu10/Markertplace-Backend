@@ -4,25 +4,26 @@ const { Tag, Product, ProductTag } = require('../../models');
 // The `/api/tags` endpoint
 
 router.get('/', (req, res) => {
-  // console.log(req.params)
-	// if(!req.params.id) 
-	// res.status(400).json({ message: `cant not find product with Tag ${req.params}`})
 	// find all tags
 	console.log("hiting endpoint findAll",Tag)
-	Tag.findAll({
+	Product.findAll({
+		attributes:['id', 'product_name', 'price', 'stock'],
 		include: [
 			{
-				model: Product,
-				through: ProductTag
+				model: Category,
+				attributes:['category_name']
+			},
+			{
+				model: Tag,
+				attributes:['tag_name']
 			}
 		]
-	}).then(row => {
-		res.status(200).json(row)
-	}).catch(err => {
-		return res.status(400).json({'error':err})
 	})
-
-  // be sure to include its associated Product data
+		.then(dbProductData => res.json(dbProductData))
+		.catch(err => {
+		console.log(err);
+		res.status(400).json(err);
+	});
 });
 
 router.get('/:id', (req, res) => {
