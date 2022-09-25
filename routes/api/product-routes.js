@@ -8,44 +8,54 @@ router.get('/', (req, res) => {
 	console.log("hiting endpoint findAll",Product)
 	Product.findAll({
 		include: [
-			Category, {
+			{
+				model: Category,
+				attributes: ["category_name"],
+			},
+			{
 				model: Tag,
-				through: ProductTag
+				attributes: ["tag_name"]
 			}
 		]
-		
 	})
-		// .then(products => res.json(products))
-		// .catch(err => res.status(500).json(err))
-
-		.then(products => res.json(products))
-		.catch(err => {
-			console.log("err");
-			res.status(500).json(err)
-		});
-	// find all products
-	// be sure to include its associated Category and Tag data
+	.then(products => res.json(products))
+	.catch(err => {
+		console.log(err);
+		res.status(500).json(err);
+	});
 });
 
 // get one product
 router.get('/:id', (req, res) => {
 	console.log(req.params)
-	if(!req.params.id) res.status(400).json({ message: `cant not find product with ID ${req.params.id}`})
 	Product.findOne({
 		where: {
 			id: req.params.id
 		},
 		include: [
-			Category, {
+			{
+				model: Category,
+				attributes: ["category_name"]
+			},
+			{
 				model: Tag,
-				through: ProductTag
+				attributes: ["tag_name"]
 			}
 		]
 	})
-		.then(product => res.json(product))
-		.catch(err => res.status(500).json(err))
+		.then(Product => {
+			if (!Product) {
+			res.status(500).json({message: "Get One err if"});
+			return;
+			}
+			res.json(Product);
+		})
+		.catch(err => {
+			console.log("err in catch");
+			res.status(500).json(err);
 	// find a single product by its `id`
 	// be sure to include its associated Category and Tag data
+});
 });
 
 // create new product
