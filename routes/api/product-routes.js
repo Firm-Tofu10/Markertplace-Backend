@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { rmdirSync } = require('file-system');
 const { NULL } = require('mysql2/lib/constants/types');
 const { Product, Category, Tag, ProductTag } = require('../../models');
 
@@ -144,20 +145,23 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
 	// delete one product by its `id` value
 	console.log(req.params)
-	if(!req.params.id) res.status(400).json({ message: `cant not find product with ID ${req.params.id}`})
-	Product.delete({
+	Product.destroy({
 		where: {
 			id: req.params.id
-		},
-		include: [
-			Product, {
-				model: Product,
-				through: Product
-			}
-		]
+		}
 	})
+		.then(dbProductData => {
+			if(dbProductData) {
+				res.status(404).json({message: 'No product Delete.'});
+			return;
+			}
+			res.json(dbProductData);
+		})
+		.catch(err => {
+			console.log(err);
+			res.json(500).json(err);
+		});
+	});
 
-
-});
 
 module.exports = router;
