@@ -110,9 +110,9 @@ Product.destroy({
 })
 	.then(response => {
 		if(response){
-			res.status(500).json({message: 'No product Delete.'});
+			res.status(404).json({message: 'No product Delete.'});
 		}
-		res.status(200).json(response);
+		res.json(response);
 	})
 	.catch(err => {
 		console.log("Delete err after catch");

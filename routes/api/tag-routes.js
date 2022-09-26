@@ -56,7 +56,7 @@ router.put('/:id', (req, res) => {
 	Tag.update(req.body, {
 		where: {
 			Tag: req.params.id,
-		},
+		}
 	})
 	.then(response => {
 		if (!response) {
@@ -67,7 +67,7 @@ router.put('/:id', (req, res) => {
 	.catch(error => {
 		console.log("Put catch err in function");
 		res.status(500).json(err);
-	})
+	});
 });
 //Dosen't work throws err no API called but not found(my err)
 router.delete('/:id', (req, res) => {
