@@ -1,30 +1,24 @@
 const router = require('express').Router();
-const { Tag, Product, ProductTag } = require('../../models');
+const { Tag, Product, ProductTag, Category } = require('../../models');
 
 // The `/api/tags` endpoint
 //Dosen't work throws err no API called but not found(my err)
 router.get('/', (req, res) => {
 	// find all tags
 	console.log("hiting endpoint findAll",Tag)
-	Product.findAll({
+	Tag.findAll({
 		attributes:['id', 'product_name', 'price', 'stock'],
 		include: [
 			{
-				model: Category,
-				attributes:['category_name']
+				model: Product,
+				through: ProductTag,
 			},
-			{
-				model: Tag,
-				attributes:['tag_name']
-			}
-		]
+		],
 	})
 		.then(response => res.json(response))
-		.catch(err => {
-		console.log("err");
-		res.status(500).json(err);
+		.catch((err) => res.status(500).json(err));
 	});
-});
+
 //Dosen't work throws err no API called but not found(my err)
 router.get('/:id', (req, res) => {
   // find a single tag by its `id`
