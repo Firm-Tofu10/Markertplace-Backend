@@ -2,7 +2,7 @@ const router = require('express').Router();
 // const { Category, Product } = require('../models');
 const { Product, Category, Tag, ProductTag } = require('../../models');
 // The `/api/categories` endpoint
-
+//This gets all categories
 router.get('/', (req, res) => {
   // find all categories
 	console.log("hiting endpoint findAll",Category)
@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 			res.status(500).json(err)
 		});
 });
-
+//This gets a single category
 router.get('/:id', (req, res) => {
   // find one category by its `id` value
 	console.log("hiting endpoint findOne",Category)
@@ -39,7 +39,7 @@ router.get('/:id', (req, res) => {
 		});
   // be sure to include its associated Products
 });
-
+//This creates a single category
 router.post('/', (req, res) => {
 	console.log("hiting endpoint Post",Category)
 	Category.create(req.body)
@@ -51,7 +51,7 @@ router.post('/', (req, res) => {
 				res.status(200).json(response)
 	})
 });
-
+//This lets you edit the item when it is already in the database
 router.put('/:id', (req, res) => {
 	console.log("before then category PUT")
 	console.log(req) 
@@ -72,7 +72,7 @@ router.put('/:id', (req, res) => {
 		res.status(500).json(err);
 	 });
 });
-
+//This alows you to delete a single category via id
 router.delete('/:id', (req, res) => {
 	console.log("hiting endpoint delete",Category)
   console.log(req.params)

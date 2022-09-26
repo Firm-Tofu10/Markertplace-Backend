@@ -2,8 +2,7 @@ const router = require('express').Router();
 const { NULL } = require('mysql2/lib/constants/types');
 const { Product, Category, Tag, ProductTag } = require('../../models');
 
-// The `/api/products` endpoint
-// GetAll dosent'work "SequelizeEagerLoadingError"?
+//This gets all products
 router.get('/', (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
@@ -27,7 +26,7 @@ router.get('/', (req, res) => {
     });
 });
 
-//Get works but throws err?
+//This gets a single product
 router.get('/:id', (req, res) => {
 	console.log("Hitting endpoint findOne")
 	Product.findOne({
@@ -58,7 +57,7 @@ router.get('/:id', (req, res) => {
 			res.status(500).json(err);
 });
 });
-//Dosen't work throws err no API called but not found(my err)
+//This creates a single product
 router.post('/', (req, res) => { //not working at the moment
 	console.log("Hiting Post product",Product)
 	Product.create(req.body)
@@ -78,7 +77,7 @@ router.post('/', (req, res) => { //not working at the moment
 			"tagIds": [1, 2, 3, 4]
 		}
 	*/
-// update product WORKS!
+//This lets you edit the item when it is already in the database
 router.put('/:id', (req, res) => { 
 	console.log("before then product PUT") 
 	console.log(req)
@@ -99,7 +98,7 @@ Product.update(req.body, {
 		res.status(500).json(err);
 	 });
 });
-//Delete works but throws err?
+//This alows you to delete a single product via id
 router.delete('/:id', (req, res) => { 
 console.log("Hiting endpoint delete",Product)
 console.log(req.params)

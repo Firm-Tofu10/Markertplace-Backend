@@ -3,14 +3,12 @@ const apiRoutes = require('./api');
 const productRoute = require('./api/product-routes');
 // const productRoutes = require('./product-routes');
 
-// router.use('/api/product-routes', productRoute, (req, res) => {
-// 	res.send("<h1>Display Product!</h1>"); //Need Help Fixing
-// });
-
+//This gives the user feed back when the route is called but not found this could be syntax related or the way you are entering data could be inccorect.
 router.use('/api', apiRoutes, (req, res) => { 
 	res.status(404).json({error:"API called but not found!"});
 });
 
+//This gives the user when the route is just wrong!
 router.use((req, res) => {
 	res.send("<h1>Wrong Route!</h1>")
 });

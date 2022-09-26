@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const { Tag, Product, ProductTag, Category } = require('../../models');
 
-// The `/api/tags` endpoint
-//Dosen't work throws err no API called but not found(my err)
+
+//This gets all tags
 router.get('/', (req, res) => {
    Tag.findAll({
      include: [
@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
      .catch((err) => res.status(500).json(err));
  });
 
-//Dosen't work throws err no API called but not found(my err)
+//This gets a single tag
 router.get('/:id', (req, res) => {
   // find a single tag by its `id`
 		Tag.findOne({
@@ -36,7 +36,7 @@ router.get('/:id', (req, res) => {
 			res.status(500).json(err)
 		});
 });
-//Dosen't work throws err no API called but not found(my err)
+//This creates a single tag
 router.post('/', (req, res) => {
 	console.log("hiting endpoint Post",Tag)
 	Tag.create(req.body)
@@ -48,7 +48,7 @@ router.post('/', (req, res) => {
 				res.status(200).json(response)
 	})
 });
-//Dosen't work throws err no API called but not found(my err)
+//This lets you edit the item when it is already in the database
 router.put('/:id', (req, res) => {
   console.log("before then Tag PUT")
 	console.log(req) 
@@ -69,7 +69,7 @@ router.put('/:id', (req, res) => {
 		res.status(500).json(err);
 	});
 });
-//Dosen't work throws err no API called but not found(my err)
+//This alows you to delete a single tag via id
 router.delete('/:id', (req, res) => {
   console.log("Hiting endpoint delete",Tag)
 	console.log(req.params)
