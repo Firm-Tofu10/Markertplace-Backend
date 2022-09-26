@@ -19,10 +19,10 @@ router.get('/', (req, res) => {
 			}
 		]
 	})
-		.then(dbProductData => res.json(dbProductData))
+		.then(response => res.json(response))
 		.catch(err => {
-		console.log(err);
-		res.status(400).json(err);
+		console.log("err");
+		res.status(500).json(err);
 	});
 });
 
@@ -39,7 +39,11 @@ router.get('/:id', (req, res) => {
 				}
 			]
 		})
-  // be sure to include its associated Product data
+		.then(response => res.json(response))
+		.catch(err =>{
+			console.log("err");
+			res.status(500).json(err)
+		});
 });
 
 router.post('/', (req, res) => {

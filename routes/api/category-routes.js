@@ -14,13 +14,11 @@ router.get('/', (req, res) => {
 			}
 		]
 	}) 
-	.then(category => res.json(category))
+	.then(response => res.json(response))
 		.catch(err => {
 			console.log("err");
 			res.status(500).json(err)
 		});
-  // be sure to include its associated Products
-	
 });
 
 router.get('/:id', (req, res) => {
@@ -43,12 +41,14 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  // create a new category
 	console.log("hiting endpoint Post",Category)
 	Category.create(req.body)
-		.then((Category) => {
+		.then((response,err) => {
 			console.log("endpoint category post")
-			res.status(500).json(err)
+			if(err)
+				res.status(500).json(err)
+			else
+				res.status(200).json(response)
 	})
 });
 
@@ -61,16 +61,15 @@ router.put('/:id', (req, res) => {
 			id: req.params.id
 		}
 	})
-	.then(category => {
-		if (!category) {
+	.then(response => {
+		if (!response) {
 			res.status(500).json({message:"Put category in if"});
-			return;
 		}
-		res.json(Category);
+		res.status(200).json(response);
 	 })
 	 .catch(err => {
 		console.log("Put catch err in function");
-		res.status(200).json(err);
+		res.status(500).json(err);
 	 });
 });
 
@@ -79,17 +78,16 @@ router.delete('/:id', (req, res) => {
   console.log(req.params)
 	// delete a category by its `id` value
 	// if(!req.params.id) res.status(400).json({ message: `cant not find product with ID ${req.params.id}`})
-	Category.delete({
+	Category.destroy({
 		where: {
 			id: req.params.id
 		}
 	})
-	.then(category => {
-		if(!Category){
-			res.status(500).json({message: "Delete Category"});
-			return;
+	.then((response) => {
+		if(!response){
+			res.status(500).json({message: "Delete Category Failed"});
 		}
-		res.json(Category);
+		res.status(200).json(response);
 	})
 	.catch(err => {
 		console.log("Delete err after catch");

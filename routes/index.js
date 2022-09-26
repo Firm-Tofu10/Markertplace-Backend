@@ -8,7 +8,7 @@ const productRoute = require('./api/product-routes');
 // });
 
 router.use('/api', apiRoutes, (req, res) => { 
-	res.send("<h1>API Called</h1>");
+	res.status(404).json({error:"API called but not found!"});
 });
 
 router.use((req, res) => {
