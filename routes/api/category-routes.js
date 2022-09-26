@@ -85,9 +85,9 @@ router.delete('/:id', (req, res) => {
 	})
 	.then((response) => {
 		if(!response){
-			res.status(500).json({message: "Delete Category Failed"});
+			res.status(404).json({message: "Delete Category Failed"});
 		}
-		res.status(200).json(response);
+		res.json(response);
 	})
 	.catch(err => {
 		console.log("Delete err after catch");
