@@ -7,7 +7,7 @@ class ProductTag extends Model {}
 // const Tag = require('./Tag')
 
 // const Product = require('./Product')
-
+//seting up the relationships and state of the ProductTag modle
 ProductTag.init(
   {
     id: {

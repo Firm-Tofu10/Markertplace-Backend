@@ -5,7 +5,7 @@ const sequelize = require('../config/connection.js');
 class Tag extends Model {}
 
 // const ProductTag = require('./ProductTag')
-
+//seting up the relationships and state of the tag modle
 Tag.init(
   {
 		id: {
