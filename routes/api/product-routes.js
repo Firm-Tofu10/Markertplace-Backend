@@ -3,7 +3,7 @@ const { NULL } = require('mysql2/lib/constants/types');
 const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // The `/api/products` endpoint
-// get all products
+// GetAll dosent'work "SequelizeEagerLoadingError"?
 router.get('/', (req, res) => {
 	console.log("hiting endpoint findAll",Product)
 	Product.findAll({
@@ -32,7 +32,7 @@ router.get('/', (req, res) => {
 	});
 });
 
-
+//Get works but throws err?
 router.get('/:id', (req, res) => {
 	console.log("Hitting endpoint findOne")
 	Product.findOne({
@@ -62,7 +62,7 @@ router.get('/:id', (req, res) => {
 			res.status(500).json(err);
 });
 });
-
+//Dosen't work throws err no API called but not found(my err)
 router.post('/', (req, res) => { //not working at the moment
 	console.log("Hiting Post product",Product)
 	Product.create(req.body)
@@ -82,35 +82,7 @@ router.post('/', (req, res) => { //not working at the moment
 			tagIds: [1, 2, 3, 4]
 		}
 	*/
-	//This is commeted out to get cleaner code
-// 	if (req.body=={}){
-// 		res.status(400).json({message: "Missing req propertys of req body."})
-// 		return
-// 	}
-// 	Product.put(req.body)
-// 		.then((response) => {
-// 			// if there's product tags, we need to create pairings to bulk create in the ProductTag model
-// 			if (req.body.tagIds.length) {
-// 				const productTagIdArr = req.body.tagIds.map((tag_id) => {
-// 					console.log(tag_id)
-// 					return {
-// 						product_id: product.id,
-// 						tag_id,
-// 					};
-// 				});
-// 				return ProductTag.bulkCreate(productTagIdArr); //Was erring
-// 			}
-// 			res.status(200).json(product);
-// 		})
-// 		.then((response) => res.status(200).json(response))
-// 		// .then((productTagIds) => res.status(200))
-// 		.catch((err) => {
-// 			console.log(err);
-// 			res.status(400).json(err);
-// 		});
-// });
-
-// update product
+// update product WORKS!
 router.put('/:id', (req, res) => { 
 	console.log("before then product PUT") 
 	console.log(req)
@@ -131,8 +103,8 @@ Product.update(req.body, {
 		res.status(500).json(err);
 	 });
 });
-
-router.delete('/:id', (req, res) => {
+//Delete works but throws err?
+router.delete('/:id', (req, res) => { 
 console.log("Hiting endpoint delete",Product)
 console.log(req.params)
 Product.destroy({
