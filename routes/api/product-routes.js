@@ -5,31 +5,26 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 // The `/api/products` endpoint
 // GetAll dosent'work "SequelizeEagerLoadingError"?
 router.get('/', (req, res) => {
-	console.log("hiting endpoint findAll",Product)
-	Product.findAll({
-		include: [
-			{
-				model: Product,
-				attributes: ['id','product_name','price','category_id']
-			}
-			// {
-			// 	model: Category,
-			// 	attributes: ['id','product_name','price','category_id']
-			// 	// ["category_name"]
-			// },
-			// {
-			// 	model: Tag,
-			// 	attributes: ['id','product_name','price','category_id']
-			// 	// ["tag_name"]
-			// }
-		]
-	})
-	.then(response => res.json(response))
-	.catch(err => {
-		console.log("Product");
-		console.log(err);
-		res.status(500).json(err);
-	});
+  // find all products
+  // be sure to include its associated Category and Tag data
+  Product.findAll({
+    attributes: ['id', 'product_name', 'price', 'stock'],
+    include: [
+      {
+        model: Category,
+        attributes: ['category_name']
+      },
+      {
+        model: Tag,
+        attributes: ['tag_name']
+      }
+    ]
+  })
+    .then(dbProductData => res.json(dbProductData))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 //Get works but throws err?
@@ -39,6 +34,7 @@ router.get('/:id', (req, res) => {
 		where: {
 			id: req.params.id
 		},
+		attributes: ['id','product_name','price','stock'],
 		include: [
 			{
 				model: Category,
@@ -52,10 +48,10 @@ router.get('/:id', (req, res) => {
 	})
 		.then(response => {
 			if (!response) {
-			res.status(500).json({message: "Get One err if product"});
+			res.status(404).json({message: "Get One err if product"});
 			return;
 			}
-			res.status(500).json(response);
+			res.json(response);
 		})
 		.catch(err => {
 			console.log("err in catch");
