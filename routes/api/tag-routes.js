@@ -38,21 +38,16 @@ router.get('/:id', (req, res) => {
 });
 //Dosen't work throws err no API called but not found(my err)
 router.post('/', (req, res) => {
-	console.log("Hiting endpoint Post",Tag)
-  Tag.create(req.body)
-		.then((tag) => {
-			if (req.body.tagIds.length) {
-			const tagCreate = req.body.tagIds.map((tag_id) => {
-				console.log(tag_id)
-				return {
-					product_id: Tag.id,
-					tag_id,
-				};
-			});
-		}
-	// create new tag
+	console.log("hiting endpoint Post",Tag)
+	Tag.create(req.body)
+		.then((response,err) => {
+			console.log("endpoint category post")
+			if(err)
+				res.status(500).json(err)
+			else
+				res.status(200).json(response)
+	})
 });
-})
 //Dosen't work throws err no API called but not found(my err)
 router.put('/:id', (req, res) => {
   console.log("before then Tag PUT")
